@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home Special</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper-bg: #f5f3ee;
+      --paper-line: rgba(30, 30, 30, 0.08);
+      --ink: #1d1d1b;
+      --muted: #6d6d67;
+      --accent: #d8252f;
+      --shadow: rgba(0, 0, 0, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #d8d8d8 0%, #c7c7c7 100%);
+      color: var(--ink);
+    }
+
+    .pdf-page-wrap {
+      padding: 48px 16px 80px;
+    }
+
+    .pdf-page {
+      width: min(100%, 1250px);
+      min-height: 500px;
+      margin: 0 auto;
+      background: var(--paper-bg);
+      border: 1px solid rgba(0,0,0,0.10);
+      box-shadow: 0 28px 50px var(--shadow);
+      position: relative;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .pdf-page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(0,0,0,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.012) 1px, transparent 1px);
+      background-size: 22px 22px;
+      pointer-events: none;
+    }
+
+    .pdf-content {
+      position: relative;
+      z-index: 1;
+      padding: 36px 54px 48px;
+    }
+
+    .pdf-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--paper-line);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .pdf-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 34px 0 24px;
+      border-bottom: 2px solid rgba(0,0,0,0.22);
+    }
+
+    .pdf-brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .pdf-badge {
+      width: 56px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.12);
+      background: rgba(0,0,0,0.02);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .pdf-title {
+      margin: 0;
+      font-size: clamp(28px, 3vw, 42px);
+      line-height: 1.1;
+      letter-spacing: -0.05em;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .pdf-meta {
+      font-size: 11px;
+      line-height: 1.8;
+      text-align: right;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .pdf-table {
+      margin-top: 26px;
+      border: 1px solid rgba(0,0,0,0.12);
+      background: rgba(255,255,255,0.24);
+    }
+
+    .pdf-table-head,
+    .pdf-row {
+      display: grid;
+      grid-template-columns: 2.5fr 1.3fr 0.7fr;
+      align-items: center;
+      gap: 12px;
+      padding: 0 20px;
+    }
+
+    .pdf-table-head {
+      min-height: 52px;
+      border-bottom: 1px solid rgba(0,0,0,0.12);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .pdf-row {
+      min-height: 82px;
+      border-bottom: 1px solid rgba(0,0,0,0.10);
+      font-size: 15px;
+    }
+
+    .pdf-row:last-child {
+      border-bottom: none;
+    }
+
+    .movie-name {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+    }
+
+    .movie-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 2px rgba(216, 37, 47, 0.12);
+      flex-shrink: 0;
+    }
+
+    .movie-genre, .movie-year {
+      color: rgba(29,29,27,0.8);
+    }
+
+    .pdf-lower {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 36px;
+    }
+
+    .pdf-card {
+      background: rgba(255,255,255,0.20);
+      border: 1px solid rgba(0,0,0,0.10);
+      padding: 18px 20px 16px;
+      min-height: 146px;
+    }
+
+    .pdf-card .label {
+      margin: 0 0 12px;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .pdf-card p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.8;
+      color: rgba(29,29,27,0.85);
+    }
+
+    @media (max-width: 640px) {
+      .pdf-content {
+        padding: 22px 20px 32px;
+      }
+
+      .pdf-header {
+        align-items: flex-start;
+        gap: 18px;
+        flex-direction: column;
+      }
+
+      .pdf-meta {
+        text-align: left;
+      }
+
+      .pdf-table-head,
+      .pdf-row {
+        grid-template-columns: 1.6fr 1fr 0.7fr;
+        gap: 8px;
+        padding: 0 12px;
+      }
+
+      .pdf-row {
+        font-size: 12px;
+      }
+
+      .pdf-lower {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="flex w-full bg-gradient-to-b from-black/90 fixed top-0 z-20 justify-center">
+    <main class="flex items-center justify-between w-full p-3 lg:py-5 lg:px-8 max-w-screen-2xl">
+      <div class="flex items-center gap-8">
+        <a href="index.html" class="logo-container w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center shrink-0 leading-none">
+          <img src="assets/images/love-svgrepo-com.svg" alt="Prama logo" class="h-full w-full object-contain align-middle" />
+        </a>
+        <nav class="hidden lg:flex items-center gap-4 text-sm font-medium leading-none">
+          <a href="index.html" class="hover:text-red-500 duration-300">Home</a>
+          <a href="movies.html" class="hover:text-red-500 duration-300">Special</a>
+          <a href="playlist.html" class="hover:text-red-500 duration-300">Our films</a>
+        </nav>
+      </div>
+      <div class="flex items-center gap-4 text-white">
+        <a href="index.html" class="text-xs uppercase tracking-wider hover:text-red-500">Back</a>
+      </div>
+    </main>
+  </header>
+
+  <main class="pdf-page-wrap pt-24">
+    <div class="pdf-page">
+      <div class="pdf-content">
+        <div class="pdf-topbar">
+          <span>HBD SAYANG</span>
+          <span>Mas Pram to Hersya</span>
+        </div>
+
+        <div class="pdf-header">
+          <div class="pdf-brand">
+            <div class="pdf-badge">HBD</div>
+            <div>
+              <p class="eyebrow">Dari Mas untuk Kamu</p>
+              <h1 class="pdf-title">HBD SAYANG</h1>
+            </div>
+          </div>
+
+          <div class="pdf-meta">
+            <div>Prama: HBD-2026</div>
+            <div>Time: 28 Sept</div>
+          </div>
+        </div>
+
+        <div class="memory-layout">
+          <div class="memory-photo-stack">
+            <div class="memory-photo-card">
+              <img src="assets/images/mvs1.jpeg" alt="Portrait memory 1" />
+            </div>
+            <div class="memory-photo-card">
+              <img src="assets/images/mvs2.jpeg" alt="Portrait memory 2" />
+            </div>
+          </div>
+
+          <div class="memory-message">
+            <p class="lead">Selamat ulang tahun, sayang. Seseorang yang kehadirannya selalu kusemogakan di setiap waktu. Kamu bukan sekadar seseorang yang singgah di dalam hidup saya, melainkan alasan utama mengapa saya belajar memahami arti sabar, tulus, dan pulang. Menjalani hari bersama denganmu memberikan arti baru tentang bagaimana rasanya merasa cukup. Semoga segala hal yang sempat membuatmu merasa jatuh dan lelah di luar sana, pada akhirnya justru membentuk dirimu menjadi pribadi yang semakin utuh. Mas tau proses pendewasaan tidak pernah berjalan mudah. Ada masanya ketika pikiran kamu berantakan dan beban terasa begitu berat di pundakmu. But, look at ur self rn, you already melangkah sejauh ini dan bertahan dengan begitu hebat.</p>
+
+            <p>Semoga segala doa dan harapan yang diam-diam kamu kirimkan ke langit senantiasa didengar dan dijawab oleh Sang Pencipta, membawa hidup kamu dan saya jauh dari kita sulit. Semoga hari-harimu ke depan selalu dihadapkan dengan kejadian-kejadian membahagiakan, agar hatimu tidak sempat porak-poranda oleh kesedihan. Kalaupun suatu hari badai datang menerpa, saya ingin kamu ingat bahwa selalu ada tempat untuk bersandar, ada saya yang siap mendengar segala keluhmu tanpa syarat. Di umur yang baru ini, semoga kamu selalu bisa mengukir banyak mimpi baru di masa depan, memiliki keberanian untuk meraihnya satu per satu, dan tidak pernah merasa sepi karena Mas akan selalu ada di sampingmu. Perjalanan yang kita tempuh selama ini mungkin tidak selalu seindah khayalan, ada kalanya rencana kita diuji oleh waktu dan keadaan. Namun, selama tangan kita masih saling menggenggam, Mas yakin kita bisa melewatinya semuanya.</p>
+
+            <p>Jika diberi satu kesempatan untuk didengar, Mas ingin menceritakan betapa saya mengagumi caramu berbicara. Tentang bagaimana saya bisa duduk terpsaya sepanjang malam, hanya untuk menikmati setiap kata yang keluar dari bibirmu. Seandainya bisa, ingin kutinggalkan catatan kecil di saku kananmu, agar kamu tahu betapa berharganya dirimu, baik bagi orang lain maupun bagiku. Sederhana saja, saya ingin berterima kasih karena selalu meluangkan waktu untuk berbincang dan tertawa bersama saya.</p>
+
+            <p>Di umur baru ini, semoga kamu senantiasa diberikan nikmat panjang umur dan kebahagiaan supaya makin banyak orang yang kenal dan merasa bangga pernah mengenalmu. Semoga kamu selalu dilimpahi kemudahan serta kelancaran dalam setiap langkah dan urusan, agar kamu bisa terus menjadi jalan kebaikan bagi orang-orang yang membutuhkan bantuan. Semoga rezekimu mengalir deras tanpa putus, memberimu kesempatan untuk berkelana menjelajahi banyak tempat baru yang pada akhirnya juga membawa keberkahan serta rezeki bagi makhluk Tuhan lainnya di sekitarmu.</p>
+
+            <p>Semoga langkah kaki yang kamu pilih selalu berada dalam lindungan-Nya, dijauhkan dari marabahaya dan dari segala rasa yang sempat memberatkan hatimu. Semoga kamu tak pernah sekalipun merasa sendirian saat menghadapi rumitnya dunia, sebab ada banyak doa yang dengan tulus memelukmu dari jauh. Setiap lelah yang kamu rasakan, setiap peluh yang kamu tetaskan, dan setiap impian yang diam-diam sedang kamu perjuangkan, semoga perlahan-lahan menemukan jalan terangnya. Semoga kesehatan fisik, kedamaian pikiran, dan kelapangan dada selalu menjadi bagian dari keseharianmu. Di tengah riuhnya kehidupan, semoga kamu tak pernah kehabisan energi untuk menyebarkan kebaikan. Semoga kamu tidak ada capeknya untuk terus membantu dan bersamai aku serta temanteman lainnya selagi kita masih diberi kesempatan untuk bernapas di bumi ini.</p>
+
+            <p>Terakhir, dari sekian banyak pinta dan harapan yang tak henti-hentinya aku panjatkan untukmu, semoga kelak kamu bertumbuh menjadi sosok istri dan Ibu yang penuh kasih, bijaksana, serta membawa kehangatan yang tak terhingga bagi keluarga kita. Semoga kehidupan yang kamu jalani ke depan selalu dipenuhi oleh tawa, kedamaian, dan keberkahan yang tak pernah usai. Tuhan yang Maha Baik pasti telah menyiapkan rencana terindah untuk kita berdua di waktu yang tepat. Sampai ketemu di hari-hari baik itu, di mana segala lelah terbayar lunas oleh senyum kemenangan kita. Jangan capek untuk melangkah bersama yaa sayang, semoga di umur baru juga bisa saling menguatkan dalam kondisi apa pun. Sekali lagi, selamat bertambah usia, Hersya Assyifaa Amanda. Semoga sisa umurmu diberkahi kebahagiaan yang melimpah.</p>
+
+            <p class="signature">- Prama, <span>with love ❤️</span></p>
+          </div>
+        </div>
+
+        <style>
+          .memory-layout {
+            display: grid;
+            grid-template-columns: 320px minmax(0, 1fr);
+            gap: 5px;
+            margin-top: 5px;
+            align-items: stretch;
+          }
+
+          .memory-photo-stack {
+            display: flex;
+            flex-direction: column;
+            align-self: start;
+            gap: 5px;
+          }
+
+          .memory-photo-card {
+            aspect-ratio: 9 / 16;
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(0,0,0,0.12);
+            box-shadow: 0 18px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+          }
+
+          .memory-photo-card img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+
+          .memory-message {
+            font-size: 14px;
+            line-height: 1.9;
+            color: rgba(29,29,27,0.9);
+            text-align: right;
+          }
+
+          .memory-message .lead {
+            margin-top: 0;
+          }
+
+          .memory-message p {
+            margin-top: 0;
+            margin-bottom: 10px;
+          }
+
+          .signature {
+            margin-top: 26px !important;
+            font-weight: 600;
+            font-style: italic;
+            color: rgba(29,29,27,0.9);
+          }
+
+          .signature span {
+            font-style: normal;
+          }
+
+          @media (max-width: 768px) {
+            .memory-layout {
+              grid-template-columns: 1fr;
+            }
+
+            .memory-photo-stack {
+              width: min(100%, 320px);
+            }
+          }
+        </style>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

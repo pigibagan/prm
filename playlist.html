@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f3f4ed" />
+  <title>Little Moments | Prama &amp; Hersya</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f3f4ed;
+      --ink: #20251d;
+      --muted: #73786d;
+      --line: rgba(32, 37, 29, 0.16);
+      --green: #536b4f;
+      --coral: #d46d54;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.66), transparent 48%),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(32,37,29,.025) 32px),
+        var(--paper);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      border-bottom: 1px solid var(--line);
+      background: rgba(243,244,237,.88);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-wrap {
+      width: min(100% - 48px, 1320px);
+      min-height: 72px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .04em;
+    }
+
+    .brand img { width: 24px; height: 24px; }
+    .nav-links { display: flex; gap: 30px; align-items: center; }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 13px;
+      transition: color .2s ease;
+    }
+
+    .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--ink); }
+    .nav-links a[aria-current="page"] { font-weight: 700; }
+
+    .page-shell {
+      width: min(100% - 38px, 1320px);
+      margin: 0 auto;
+      padding: 66px 0 88px;
+    }
+
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: end;
+      padding: 0 0 34px;
+      border-bottom: 1px solid var(--line);
+      animation: arrive .65s ease both;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: .19em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 800px;
+      margin: 0;
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(48px, 7vw, 88px);
+      font-weight: 400;
+      line-height: .94;
+    }
+
+    h1 em { color: var(--coral); font-weight: 400; }
+
+    .intro-note {
+      max-width: 220px;
+      margin: 0 0 5px;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.7;
+      text-align: right;
+    }
+
+    .film-index {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: .14em;
+    }
+
+    .gallery-bar { padding: 22px 0; }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 380px);
+      justify-content: center;
+      align-items: start;
+    }
+
+    .video-item { min-width: 0; animation: arrive .45s ease both; }
+
+    .video-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: #dfe2d8;
+      box-shadow: 0 14px 32px rgba(32,37,29,.09);
+    }
+
+    .video-frame video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: #20251d;
+    }
+
+    .video-caption {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 1px 0;
+    }
+
+    .video-title {
+      min-width: 0;
+      margin: 0;
+      overflow: hidden;
+      color: var(--ink);
+      font-size: 26px;
+      font-weight: 600;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .video-meta { margin: 4px 0 0; color: var(--muted); font-size: 10px; }
+
+    .site-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 58px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 20px;
+    }
+
+    @keyframes arrive {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+      .nav-wrap, .page-shell { width: min(100% - 32px, 1320px); }
+      .nav-wrap { min-height: 62px; }
+      .nav-links { gap: 15px; }
+      .nav-links a { font-size: 11px; }
+      .brand { gap: 8px; font-size: 11px; }
+      .brand img { width: 20px; height: 20px; }
+      .page-shell { padding: 46px 0 60px; }
+      .intro { grid-template-columns: 1fr; gap: 14px; padding-bottom: 24px; }
+      h1 { font-size: 48px; }
+      .intro-note { max-width: 300px; text-align: left; }
+      .video-grid { grid-template-columns: minmax(0, 360px); }
+      .gallery-bar { padding: 17px 0; }
+      .site-footer { margin-top: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="brand" href="index.html">
+        <img src="assets/images/love-svgrepo-com.svg" alt="" />
+        <span>PRAMA <span aria-hidden="true">&amp;</span> HERSYA</span>
+      </a>
+      <nav class="nav-links" aria-label="Navigasi utama">
+        <a href="index.html">Home</a>
+        <a href="playlist.html" aria-current="page">Our films</a>
+        <a href="movies.html">Special</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="intro" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">A little archive of us</p>
+        <h1 id="page-title">Little moments,<br><em>in motion.</em></h1>
+      </div>
+      <p class="intro-note">Potongan kecil dari hari-hari yang ingin kita simpan lebih lama.</p>
+    </section>
+
+    <section aria-label="Galeri video">
+      <div class="gallery-bar">
+        <p class="film-index">01 <span aria-hidden="true">/</span> 01 &nbsp; · &nbsp; PORTRAIT FILM</p>
+      </div>
+      <div class="video-grid">
+        <article class="video-item">
+          <div class="video-frame">
+            <video controls playsinline preload="metadata" poster="assets/images/ply.jpeg" aria-label="Video kenangan">
+              <source src="assets/video/vid.mp4" type="video/mp4" />
+              Browser kamu belum mendukung pemutaran video.
+            </video>
+          </div>
+          <div class="video-caption">
+            <div>
+              <p class="video-title">A little moment to keep</p>
+              <p class="video-meta">OUR FILM · 9:16</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <span>Made of little moments</span>
+      <span>Prama &amp; Hersya · 2026</span>
+    </footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
